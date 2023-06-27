@@ -27,10 +27,10 @@ public class Program
         using var scope = host.Services.CreateScope();
         var services = scope.ServiceProvider;
 
-        // var bastianDbProvider = services.GetRequiredService<IBastianDbProvider>();
+        var bastianDbProvider = services.GetRequiredService<IBastianDbProvider>();
 
-        // await using var context = bastianDbProvider.GetDbContext();
-        // await context.Database.MigrateAsync();
+        await using var context = bastianDbProvider.GetDbContext();
+        await context.Database.MigrateAsync();
 
         var client = services.GetRequiredService<DiscordSocketClient>();
         ConfigureClientLogger(client);
