@@ -1,0 +1,36 @@
+{
+    "Token": "YOUR_BOT_TOKEN",
+    "TestGuild": "TEST_GUILD_ID",
+    "ConnectionStrings": {
+        "Default": "server=localhost;user=root;password=root;database=discord"
+    },
+    "Logging": {
+        "LogLevel": {
+            "Default": "Information",
+            "Microsoft": "Warning",
+            "System": "Warning"
+        }
+    },
+    "Serilog": {
+        "Using": [
+            "Serilog",
+            "Serilog.Sinks.Console"
+        ],
+        "MinimumLevel": {
+            "Default": "Debug",
+            "Override": {
+                "Microsoft.EntityFrameworkCore": "Warning",
+                "Microsoft.EntityFrameworkCore.Migrations": "Information"
+            }
+        },
+        "WriteTo": [
+            {
+                "Name": "Console",
+                "Args": {
+                    "Theme": "Serilog.Sinks.SystemConsole.Themes.SystemConsoleTheme::Literate, Serilog.Sinks.Console",
+                    "OutputTemplate": "[{Timestamp:HH:mm:ss} {Level:u3}] [{SourceContext}] {Message:lj}{NewLine}{Exception}"
+                }
+            }
+        ]
+    }
+}
