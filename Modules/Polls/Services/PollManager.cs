@@ -229,7 +229,16 @@ public class PollManager : IPollManager
         // adjust axis limits so there is no padding below the bar graph
         plt.SetAxisLimits(yMin: 0);
 
-        string filePath = $"{Directory.GetCurrentDirectory()}/Modules/Polls/PollResults/PollResults-{poll.Id}.png";
+        string workingDirectory = Environment.CurrentDirectory;
+
+        string projectDirectory = Directory.GetParent(workingDirectory)!.Parent!.Parent!.FullName;
+
+        string pollResultsDirectory = projectDirectory + "/PollResults";
+
+        if (!Directory.Exists(pollResultsDirectory))
+            Directory.CreateDirectory(pollResultsDirectory);
+
+        string filePath = $"{pollResultsDirectory}/PollResults-{poll.Id}.png";
 
         await Task.Run(() => plt.SaveFig(filePath));
 
