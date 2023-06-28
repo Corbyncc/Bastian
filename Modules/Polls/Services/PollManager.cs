@@ -180,7 +180,7 @@ public class PollManager : IPollManager
             return (false, string.Empty);
         }
 
-        var plt = new ScottPlot.Plot(300, 200);
+        var plt = new ScottPlot.Plot(600, 300);
 
         // plt.Style(
         //     figureBackground: System.Drawing.Color.FromArgb(0x40444B),
