@@ -50,7 +50,7 @@ public class PollManageInteraction : InteractionModuleBase<SocketInteractionCont
         {
             component.WithButton("Add Option", $"pollAddOptionButton:{pollId}", ButtonStyle.Primary);
             component.WithButton("Remove Option", $"pollRemoveOptionButton:{pollId}", ButtonStyle.Primary);
-            component.WithButton("Manage Allowed Roles", $"pollManageRolesButton:{pollId}", ButtonStyle.Primary);
+            // component.WithButton("Manage Allowed Roles", $"pollManageRolesButton:{pollId}", ButtonStyle.Primary);
             component.WithButton("View Results", $"pollViewResultsButton:{pollId}", ButtonStyle.Primary);
             component.WithButton("Close Poll", $"pollCloseButton:{pollId}", ButtonStyle.Danger);
         }

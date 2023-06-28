@@ -56,17 +56,17 @@ public class PollVoteInteraction : InteractionModuleBase<SocketInteractionContex
         }
 
         var userRoleIds = guildUser.Roles.Select(x => x.Id);
-        var allowedRoleIds = poll.AllowedRoles.Select(r => r.RoleId);
+        // var allowedRoleIds = poll.AllowedRoles.Select(r => r.RoleId);
 
-        var hasAllowedRole = userRoleIds
-            .Intersect(allowedRoleIds)
-            .Any();
+        // var hasAllowedRole = userRoleIds
+        //     .Intersect(allowedRoleIds)
+        //     .Any();
 
-        if (!hasAllowedRole)
-        {
-            await FollowupAsync("You do not have the required role to vote on this poll.", ephemeral: true);
-            return;
-        }
+        // if (!hasAllowedRole)
+        // {
+        //     await FollowupAsync("You do not have the required role to vote on this poll.", ephemeral: true);
+        //     return;
+        // }
 
         var userVotes = poll.Votes
             .Where(v => v.UserId == guildUser.Id)
