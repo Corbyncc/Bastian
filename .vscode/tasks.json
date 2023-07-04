@@ -2,40 +2,64 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "build bot",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Bastian.csproj",
+                "${workspaceFolder}/Bastian.Bot/Bastian.Bot.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "publish",
+            "label": "publish bot",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/Bastian.csproj",
+                "${workspaceFolder}/Bastian.Bot/Bastian.Bot.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "watch",
+            "label": "watch bot",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/Bastian.csproj"
+                "${workspaceFolder}/Bastian.Bot/Bastian.Bot.csproj"
             ],
             "problemMatcher": "$msCompile"
-        }
+        },
+        {
+            "label": "build panel",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/Bastian.Panel/Bastian.Panel.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch panel",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/Bastian.Panel/Bastian.Panel.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
     ]
 }
