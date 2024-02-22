@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Bastian.Modules.Polls.Commands;
+
 public class PollCommand : InteractionModuleBase<SocketInteractionContext>
 {
     private readonly ILogger<PollCommand> _logger;
@@ -39,7 +40,8 @@ public class PollCommand : InteractionModuleBase<SocketInteractionContext>
         string embedColor = "#7289da",
         int maxVotes = 1,
         bool uniqueVotes = true,
-        bool viewResultsBeforeClose = false)
+        bool viewResultsBeforeClose = false
+    )
     {
         await DeferAsync(ephemeral: true);
 
@@ -84,24 +86,43 @@ public class PollCommand : InteractionModuleBase<SocketInteractionContext>
             var component = new ComponentBuilder();
             if (privacy == PollPrivacy.Public && viewResultsBeforeClose)
             {
-                component.WithButton("View Results", $"pollViewResultsButton:{newPoll.Id}", ButtonStyle.Primary);
+                component.WithButton(
+                    "View Results",
+                    $"pollViewResultsButton:{newPoll.Id}",
+                    ButtonStyle.Primary
+                );
             }
-            component.WithButton("Manage Poll", $"managePollButton:{newPoll.Id}", ButtonStyle.Secondary);
+            component.WithButton(
+                "Manage Poll",
+                $"managePollButton:{newPoll.Id}",
+                ButtonStyle.Secondary
+            );
 
-            var embedMessage = await Context.Channel.SendMessageAsync(embed: embed.Build(), components: component.Build());
+            var embedMessage = await Context.Channel.SendMessageAsync(
+                embed: embed.Build(),
+                components: component.Build()
+            );
 
             newPoll.MessageId = embedMessage.Id;
 
             await context.SaveChangesAsync();
 
-            if (!string.IsNullOrEmpty(duration)) await _pollManager.StartPollTimer(newPoll);
+            if (!string.IsNullOrEmpty(duration))
+                await _pollManager.StartPollTimer(newPoll);
         }
         catch (DbUpdateException ex)
         {
-            await FollowupAsync($"Error creating poll, please contact the developer. {ex.Message}", ephemeral: true);
+            await FollowupAsync(
+                $"Error creating poll, please contact the developer. {ex.Message}",
+                ephemeral: true
+            );
             return;
         }
 
-        await FollowupAsync("Created a poll. To manage the poll press the Manage Poll button.", ephemeral: true);
+        await FollowupAsync(
+            "Created a poll. To manage the poll press the Manage Poll button.",
+            ephemeral: true
+        );
     }
 }
+

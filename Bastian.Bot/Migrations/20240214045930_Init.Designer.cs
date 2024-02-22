@@ -2,6 +2,7 @@
 using Bastian.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bastian.Migrations
 {
     [DbContext(typeof(BastianDbContext))]
-    partial class BastianDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240214045930_Init")]
+    partial class Init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -122,26 +125,6 @@ namespace Bastian.Migrations
                     b.HasIndex("PollId");
 
                     b.ToTable("PollVotes");
-                });
-
-            modelBuilder.Entity("Bastian.Modules.SelfRoles.Entities.PendingRole", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<ulong>("GuildId")
-                        .HasColumnType("bigint unsigned");
-
-                    b.Property<ulong>("RoleId")
-                        .HasColumnType("bigint unsigned");
-
-                    b.Property<ulong>("UserId")
-                        .HasColumnType("bigint unsigned");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PendingRoles");
                 });
 
             modelBuilder.Entity("Bastian.Modules.SelfRoles.Entities.SelfRole", b =>

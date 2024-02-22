@@ -1,20 +1,22 @@
+using System;
+using System.Reflection;
+using System.Threading.Tasks;
+using Bastian.API.Database;
+using Bastian.Database;
+using Bastian.Framework.Extensions;
+using Discord;
+using Discord.Interactions;
+using Discord.WebSocket;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Serilog;
-using System.Reflection;
-using System.Threading.Tasks;
-using Discord;
-using Discord.WebSocket;
-using Bastian.Database;
-using Bastian.Framework.Extensions;
-using Discord.Interactions;
-using Serilog.Events;
 using Microsoft.Extensions.Logging;
-using Bastian.API.Database;
+using Serilog;
+using Serilog.Events;
 
 namespace Bastian;
+
 public class Program
 {
     private static Serilog.ILogger clientLogger = null!;
@@ -48,22 +50,26 @@ public class Program
     }
 
     public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureServices(ConfigureServices);
+        Host.CreateDefaultBuilder(args).ConfigureServices(ConfigureServices);
 
-    private static void ConfigureServices(HostBuilderContext hostContext, IServiceCollection services)
+    private static void ConfigureServices(
+        HostBuilderContext hostContext,
+        IServiceCollection services
+    )
     {
         services.AddLogging(loggingBuilder =>
-            loggingBuilder.ClearProviders()
-                .AddSerilog(dispose: true));
+            loggingBuilder.ClearProviders().AddSerilog(dispose: true)
+        );
 
         services.AddSingleton<DiscordSocketClient>();
         services.AddSingleton<InteractionHandler>();
-        services.AddSingleton(x => new InteractionService(x.GetRequiredService<DiscordSocketClient>()));
+        services.AddSingleton(x => new InteractionService(
+            x.GetRequiredService<DiscordSocketClient>()
+        ));
 
         services.AddDbContext<BastianDbContext>(options =>
-            options.UseMySQL(hostContext.Configuration.GetConnectionString("Default")!));
-
+            options.UseMySQL(hostContext.Configuration.GetConnectionString("Default")!)
+        );
 
         services.RegisterServiceImplementations(Assembly.GetExecutingAssembly());
     }
@@ -71,16 +77,13 @@ public class Program
     private static void ConfigureLogger(IHost host)
     {
         Log.Logger = new LoggerConfiguration()
-            .ReadFrom
-            .Configuration(host.Services.GetRequiredService<IConfiguration>())
+            .ReadFrom.Configuration(host.Services.GetRequiredService<IConfiguration>())
             .CreateLogger();
     }
 
     private static void ConfigureClientLogger(DiscordSocketClient client)
     {
-        clientLogger = new LoggerConfiguration()
-            .WriteTo.Console()
-            .CreateLogger();
+        clientLogger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
 
         client.Log += async message =>
         {
@@ -94,7 +97,13 @@ public class Program
                 LogSeverity.Debug => LogEventLevel.Debug,
                 _ => LogEventLevel.Information
             };
-            clientLogger.Write(severity, message.Exception, "[{Source}] {Message}", message.Source, message.Message);
+            clientLogger.Write(
+                severity,
+                message.Exception,
+                "[{Source}] {Message}",
+                message.Source,
+                message.Message
+            );
             await Task.CompletedTask;
         };
     }

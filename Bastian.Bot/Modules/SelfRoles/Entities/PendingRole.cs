@@ -1,12 +1,9 @@
-#nullable disable
-
 namespace Bastian.Modules.SelfRoles.Entities;
 
-public class SelfRole
+public class PendingRole
 {
     public int Id { get; set; }
     public ulong GuildId { get; set; }
     public ulong RoleId { get; set; }
-    public bool RequiresVerification { get; set; }
+    public ulong UserId { get; set; }
 }
-

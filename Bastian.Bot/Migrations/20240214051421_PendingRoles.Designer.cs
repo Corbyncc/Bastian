@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bastian.Migrations
 {
     [DbContext(typeof(BastianDbContext))]
-    [Migration("20230627210629_Init")]
-    partial class Init
+    [Migration("20240214051421_PendingRoles")]
+    partial class PendingRoles
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -127,6 +127,26 @@ namespace Bastian.Migrations
                     b.ToTable("PollVotes");
                 });
 
+            modelBuilder.Entity("Bastian.Modules.SelfRoles.Entities.PendingRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<ulong>("GuildId")
+                        .HasColumnType("bigint unsigned");
+
+                    b.Property<ulong>("RoleId")
+                        .HasColumnType("bigint unsigned");
+
+                    b.Property<ulong>("UserId")
+                        .HasColumnType("bigint unsigned");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PendingRoles");
+                });
+
             modelBuilder.Entity("Bastian.Modules.SelfRoles.Entities.SelfRole", b =>
                 {
                     b.Property<int>("Id")
@@ -135,6 +155,9 @@ namespace Bastian.Migrations
 
                     b.Property<ulong>("GuildId")
                         .HasColumnType("bigint unsigned");
+
+                    b.Property<bool>("RequiresVerification")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<ulong>("RoleId")
                         .HasColumnType("bigint unsigned");

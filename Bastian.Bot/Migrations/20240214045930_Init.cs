@@ -44,7 +44,8 @@ namespace Bastian.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     GuildId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
-                    RoleId = table.Column<ulong>(type: "bigint unsigned", nullable: false)
+                    RoleId = table.Column<ulong>(type: "bigint unsigned", nullable: false),
+                    RequiresVerification = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
